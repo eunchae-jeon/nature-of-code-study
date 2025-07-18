@@ -48,7 +48,7 @@ function draw() {
             if (dropSounds.length) {
                 let s = random(dropSounds);
                 if (s.isLoaded()) {
-                    s.setVolume(random(0.1, 0.9));
+                    s.setVolume(random(0.5, 1));
                     s.play();
                 }
             }
