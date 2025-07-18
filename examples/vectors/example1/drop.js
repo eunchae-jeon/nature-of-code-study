@@ -6,9 +6,9 @@ let maxDrops = 100;
 function preload() {
     soundFormats('mp3', 'ogg');
     dropSounds = [
-        loadSound('example1/drop1.mp3'),
-        loadSound('example1/drop2.mp3'),
-        loadSound('example1/drop3.mp3')
+        loadSound('drop1.mp3'),
+        loadSound('drop2.mp3'),
+        loadSound('drop3.mp3')
     ];
 }
 
