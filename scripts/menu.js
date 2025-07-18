@@ -1,23 +1,32 @@
 const chapters = [
-    { title: "Chapter 1", link: "chapters/chapter1.html" },
-    { title: "Chapter 2", link: "chapters/chapter2.html" },
-    { title: "Chapter 3", link: "chapters/chapter3.html" }
+    { title: "0. Randomness", link: "/chapters/randomness.html" },
+    { title: "1. Vectors", link: "/chapters/vectors.html" },
+    { title: "2. Forces", link: "/chapters/forces.html" }
 ];
 
 function createMenu() {
+    const nav = document.createElement('nav');
+    const h2 = document.createElement('h2');
     const menu = document.createElement('ul');
-    menu.classList.add('menu');
 
     chapters.forEach(chapter => {
         const menuItem = document.createElement('li');
         const menuLink = document.createElement('a');
         menuLink.href = chapter.link;
         menuLink.textContent = chapter.title;
+        // 현재 페이지면 active 클래스 추가
+        if (window.location.pathname.endsWith(chapter.link.split('/').pop())) {
+            menuLink.classList.add('active');
+        }
         menuItem.appendChild(menuLink);
         menu.appendChild(menuItem);
     });
 
-    document.body.appendChild(menu);
+    nav.appendChild(h2);
+    nav.appendChild(menu);
+
+    // body의 맨 앞에 nav 삽입
+    document.body.prepend(nav);
 }
 
 document.addEventListener('DOMContentLoaded', createMenu);
