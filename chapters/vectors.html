@@ -11,10 +11,15 @@
 <body>
     <div id="content">
         <h1>Vectors</h1>
-        <p></p>
-        <iframe src="../examples/vectors/example1" width="600" height="400"></iframe>
+        <div id="example1"></div>
     </div>
     <script src="../scripts/menu.js"></script>
+    <script src="../scripts/p5ExampleEmbed.js"></script>
+    <script>
+        document.getElementById('example1').appendChild(
+            createP5ExampleEmbed({ exampleId: "vectors/example1" })
+        );
+    </script>
 </body>
 
 </html>
