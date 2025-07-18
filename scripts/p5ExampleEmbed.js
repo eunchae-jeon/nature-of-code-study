@@ -1,4 +1,4 @@
-function createP5ExampleEmbed({ exampleId, width = 600, height = 400, base = "examples" }) {
+function createP5ExampleEmbed({ exampleId, width = 600, height = 400, base = "nature-of-code-study/examples" }) {
   // 예제 id: "vectors/example1" 또는 "forces/example1" 등
   const container = document.createElement('div');
   container.style.marginBottom = "32px";
