@@ -130,41 +130,6 @@ iframe {
     box-shadow: 0 2px 12px rgba(40, 40, 40, 0.10);
 }
 
-button#reset-iframe,
-button#pause-iframe,
-button#resume-iframe {
-    background: #444;
-    color: #e0e0e0;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-}
-
-button#reset-iframe:hover,
-button#pause-iframe:hover,
-button#resume-iframe:hover {
-    background: #555;
-    color: #fff;
-}
-
-button#reset-iframe:active,
-button#pause-iframe:active,
-button#resume-iframe:active {
-    background: #666;
-    color: #fff;
-}
-
-button#reset-iframe:disabled,
-button#pause-iframe:disabled,
-button#resume-iframe:disabled {
-    background: #333;
-    color: #777;
-    cursor: not-allowed;
-}
-
 div.button-box {
     display: flex;
     gap: 12px;

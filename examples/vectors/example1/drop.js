@@ -13,7 +13,7 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(windowWidth, 600);
     rainSlider = createSlider(1, 300, 10, 1);
     rainSlider.position(20, 20);
     rainSlider.style('width', '200px');
@@ -23,7 +23,7 @@ function setup() {
 }
 
 function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
+    resizeCanvas(windowWidth, 600);
 }
 
 function draw() {
