@@ -50,10 +50,15 @@ function mousePressed() {
     if (isEquilibrium) {
         setEquilibriumForces(forceCount);
     } else {
-        // 랜덤 하나만 세게
-        unbalanceIndex = floor(random(forces.length));
-        let mag = forces[unbalanceIndex].mag() * random(1.2, 1.6);
-        forces[unbalanceIndex].setMag(mag);
+        // 완전히 새로운 벡터들로 재생성 (불균형)
+        forces = [];
+        let baseMag = random(30, 60);
+        let angle0 = random(TWO_PI);
+        for (let i = 0; i < forceCount; i++) {
+            let angle = angle0 + i * TWO_PI / forceCount + random(-0.2, 0.2);
+            let mag = baseMag * random(1.2, 1.7); // 더 세게
+            forces.push(p5.Vector.fromAngle(angle).setMag(mag));
+        }
     }
 }
 
