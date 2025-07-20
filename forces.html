@@ -18,10 +18,29 @@
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen></iframe>
         </div>
-
-        <iframe src="examples/forces/example1" width="600" height="400"></iframe>
+        <h2>제1 법칙: 관성의 법칙</h2>
+        <p>정지한 물체는 정지 상태를 유지하고, 움직이는 물체는 불균형한 힘이 작용하지 않는 한 일정한 속도와 방향으로 계속 움직입니다.</p>
+        <div id="example1"></div>
+        <h2>제3 법칙: 작용 반작용의 법칙</h2>
+        <p>모든 작용에는 크기가 같고 방향이 반대인 반작용이 있습니다. 힘은 항상 쌍으로 발생합니다. 두 힘의 세기는 같지만 방향은 반대입니다.</p>
+        <div id="example2"></div>
+        <h2>제2 법칙: 가속도의 법칙</h2>
+        <p>힘은 질량 곱하기 가속도와 같습니다. F = m * a</p>
+        <div id="example3"></div>
     </div>
     <script src="scripts/menu.js"></script>
+    <script src="scripts/p5ExampleEmbed.js"></script>
+    <script>
+        document.getElementById('example1').appendChild(
+            createP5ExampleEmbed({ exampleId: "forces/example1/index.html", width: 1000, height: 700 })
+        );
+        document.getElementById('example2').appendChild(
+            createP5ExampleEmbed({ exampleId: "forces/example2/index.html", width: 1000, height: 700 })
+        );
+        document.getElementById('example3').appendChild(
+            createP5ExampleEmbed({ exampleId: "forces/example3/index.html", width: 1000, height: 700 })
+        );
+    </script>
 </body>
 
 </html>
