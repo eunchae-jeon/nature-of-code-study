@@ -56,6 +56,38 @@ function createImageEmbed({ imgUrl, alt = "", width = 600, target = null, margin
   return container;
 }
 
+function createCodeBlock({ code, language = "javascript", target = null, comment = "" }) {
+  const container = target ?? document.createElement('div');
+  container.classList.add('overflow-visible', 'pt-0', 'codesplit', 'callout', 'not-prose');
+
+  // 코드 블럭
+  const pre = document.createElement('pre');
+  pre.className = `hljs code language-${language}`;
+  const codeElem = document.createElement('code');
+  codeElem.className = `hljs code language-${language}`;
+  codeElem.textContent = code;
+  pre.appendChild(codeElem);
+
+  // 주석(설명)
+  let commentDiv = null;
+  if (comment) {
+    commentDiv = document.createElement('div');
+    commentDiv.className = 'comment';
+    commentDiv.innerHTML = `<p>${comment}</p>`;
+  }
+
+  // 구조 맞추기
+  const pairDiv = document.createElement('div');
+  pairDiv.className = 'pair';
+  pairDiv.appendChild(pre);
+  if (commentDiv) pairDiv.appendChild(commentDiv);
+
+  // container.appendChild(pairDiv);
+  target.insertAdjacentElement('afterend', container);
+
+  return container;
+}
+
 // don't underestimate the force
 createYoutubeEmbed({
   videoId: "L4EdtpCvF8I",

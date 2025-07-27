@@ -11,6 +11,7 @@ canvas {
 
 button#reset-btn,
 button#pause-btn,
+button#link-btn,
 button#resume-btn {
   background: #444;
   color: #e0e0e0;
@@ -25,6 +26,7 @@ button#resume-btn {
 
 button#reset-btn:hover,
 button#pause-btn:hover,
+button#link-btn:hover,
 button#resume-btn:hover {
   background: #555;
   color: #fff;
@@ -32,6 +34,7 @@ button#resume-btn:hover {
 
 button#reset-btn:active,
 button#pause-btn:active,
+button#link-btn:active,
 button#resume-btn:active {
   background: #666;
   color: #fff;
@@ -39,6 +42,7 @@ button#resume-btn:active {
 
 button#reset-btn:disabled,
 button#pause-btn:disabled,
+button#link-btn:disabled,
 button#resume-btn:disabled {
   background: #333;
   color: #777;
