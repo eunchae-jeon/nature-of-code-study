@@ -111,15 +111,14 @@ class Body {
         this.acc = createVector(0, 0);
         this.mass = mass;
         this.r = 3.5; // 별처럼 작게
-        // 별자리 느낌의 밝은 흰색~파란색 계열
+        // 별자리 느낌의 밝은 흰색~파란색~노란색 계열
         let starColors = [
             color(235, 245, 255, 250), // 푸른빛 흰색
             color(210, 225, 255, 240), // 연한 파랑
             color(255, 255, 245, 250), // 따뜻한 흰색
-            color(200, 220, 255, 230), // 푸른 별
             color(255, 255, 255, 255), // 순백
             color(180, 210, 255, 220), // 더 푸른 별
-            color(220, 235, 255, 200)  // 흐린 파랑
+            color(255, 245, 200, 240), // 연노랑
         ];
         this.col = random(starColors);
     }
@@ -135,13 +134,21 @@ class Body {
     }
 
     display() {
+        // 별 주변에 은은한 빛 효과 (겹 수와 투명도 줄임)
+        for (let i = 3; i >= 1; i--) {
+            let glowAlpha = map(i, 1, 4, 15, 15 - i * 5);
+            let glowRadius = this.r * (1 + i * 1.5);
+            fill(red(this.col), green(this.col), blue(this.col), glowAlpha);
+            noStroke();
+            ellipse(this.pos.x, this.pos.y, glowRadius, glowRadius);
+        }
         noStroke();
         fill(this.col);
         ellipse(this.pos.x, this.pos.y, this.r * 2, this.r * 2);
         // 별빛 효과
-        if (random() < 0.005) {
-            fill(this.col, 80);
-            ellipse(this.pos.x, this.pos.y, this.r * 3, this.r * 3);
+        if (random() < 0.01) {
+            fill(this.col, 100);
+            ellipse(this.pos.x, this.pos.y, this.r * 2.5, this.r * 2.5);
         }
     }
 }
