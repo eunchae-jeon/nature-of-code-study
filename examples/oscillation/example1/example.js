@@ -9,7 +9,7 @@ let bob;
 let spring;
 
 function setup() {
-    createCanvas(640, 240);
+    createCanvas(400, 400);
     // Create objects at starting position
     // Note third argument in Spring constructor is "rest length"
     spring = new Spring(width / 2, 10, 100);
