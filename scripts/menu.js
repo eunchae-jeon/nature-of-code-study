@@ -1,7 +1,8 @@
 const chapters = [
     { title: "0. Randomness", link: "randomness.html" },
     { title: "1. Vectors", link: "vectors.html" },
-    { title: "2. Forces", link: "forces.html" }
+    { title: "2. Forces", link: "forces.html" },
+    { title: "3. Oscillation", link: "oscillation.html" },
 ];
 
 function createMenu() {
