@@ -91,8 +91,51 @@ function createCodeBlock({ code, language = "javascript", target = null, comment
 createP5ExampleEmbed({
   exampleId: "oscillation/example1",
   width: '100%',
-  height: 680,
+  height: 500,
   base: "https://eunchae-jeon.github.io/nature-of-code-study/examples",
   target: document.querySelectorAll('[data-type="exercise"]')[12]
 });
+
+createP5ExampleEmbed({
+  exampleId: "oscillation/example2",
+  width: '100%',
+  height: 500,
+  base: "https://eunchae-jeon.github.io/nature-of-code-study/examples",
+  target: document.querySelectorAll('[data-type="exercise"]')[13]
+});
+
+
+createP5ExampleEmbed({
+  exampleId: "oscillation/example5",
+  width: '100%',
+  height: 500,
+  base: "https://eunchae-jeon.github.io/nature-of-code-study/examples",
+  target: document.querySelectorAll('[data-type="exercise"]')[14]
+});
+
+createP5ExampleEmbed({
+  exampleId: "oscillation/example6",
+  width: '100%',
+  height: 500,
+  base: "https://eunchae-jeon.github.io/nature-of-code-study/examples",
+  target: document.querySelectorAll('[data-type="exercise"]')[16]
+});
+
+createP5ExampleEmbed({
+  exampleId: "oscillation/example4",
+  width: '100%',
+  height: 500,
+  base: "https://eunchae-jeon.github.io/nature-of-code-study/examples",
+  target: document.querySelector('[data-translation-id="p_436"]')
+});
+
+// createP5ExampleEmbed({
+//   exampleId: "oscillation/example6",
+//   width: '100%',
+//   height: 500,
+//   base: "https://eunchae-jeon.github.io/nature-of-code-study/examples",
+//   target: document.querySelectorAll('[data-type="exercise"]')[16]
+// });
+
+
 
