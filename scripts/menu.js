@@ -3,6 +3,8 @@ const chapters = [
     { title: "1. Vectors", link: "vectors.html" },
     { title: "2. Forces", link: "forces.html" },
     { title: "3. Oscillation", link: "oscillation.html" },
+    { title: "4. Particle System", link: "particle.html" },
+    { title: "Workshop", link: "workshop.html" },
 ];
 
 function createMenu() {

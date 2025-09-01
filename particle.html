@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oscillation - Nature of Code Study</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+    <div id="content">
+        <div id="example1"></div>
+    </div>
+    <script src="scripts/menu.js"></script>
+    <script src="scripts/p5ExampleEmbed.js"></script>
+    <script>
+        const exampleCount = 1;
+        for (let i = 1; i <= exampleCount; i++) {
+            document.getElementById(`example${i}`).appendChild(
+                createP5ExampleEmbed({
+                    exampleId: `particle/example${i}/index.html`,
+                    width: 1000,
+                    height: 700
+                })
+            );
+        }
+    </script>
+</body>
+
+</html>
