@@ -3,9 +3,9 @@ class Boid {
     this.acceleration = createVector(0, 0);
     this.velocity = createVector(random(-1, 1), random(-1, 1));
     this.position = createVector(x, y);
-    this.r = 3.0;
-    this.maxspeed = 3; // Maximum speed
-    this.maxforce = 0.05; // Maximum steering force
+    this.r = 5.0;
+    this.maxspeed = 3;
+    this.maxforce = 0.05;
   }
 
   run(boids) {
@@ -16,66 +16,58 @@ class Boid {
   }
 
   applyForce(force) {
-    // We could add mass here if we want A = F / M
     this.acceleration.add(force);
   }
 
-  // We accumulate a new acceleration each time based on three rules
   flock(boids) {
-    let sep = this.separate(boids); // Separation
-    let ali = this.align(boids); // Alignment
-    let coh = this.cohere(boids); // Cohesion
-    // Arbitrarily weight these forces
+    let sep = this.separate(boids);
+    let ali = this.align(boids);
+    let coh = this.cohere(boids);
     sep.mult(1.5);
     ali.mult(1.0);
     coh.mult(1.0);
-    // Add the force vectors to acceleration
     this.applyForce(sep);
     this.applyForce(ali);
     this.applyForce(coh);
   }
 
-  // Method to update location
   update() {
-    // Update velocity
     this.velocity.add(this.acceleration);
-    // Limit speed
     this.velocity.limit(this.maxspeed);
     this.position.add(this.velocity);
-    // Reset accelertion to 0 each cycle
     this.acceleration.mult(0);
   }
 
-  // A method that calculates and applies a steering force towards a target
-  // STEER = DESIRED MINUS VELOCITY
   seek(target) {
-    let desired = p5.Vector.sub(target, this.position); // A vector pointing from the location to the target
-    // Normalize desired and scale to maximum speed
+    let desired = p5.Vector.sub(target, this.position);
     desired.normalize();
     desired.mult(this.maxspeed);
-    // Steering = Desired minus Velocity
     let steer = p5.Vector.sub(desired, this.velocity);
-    steer.limit(this.maxforce); // Limit to maximum steering force
+    steer.limit(this.maxforce);
     return steer;
   }
 
   show() {
-    // Draw a triangle rotated in the direction of velocity
+    // 반딧불 효과: glow(초록형광) + 본체
     let angle = this.velocity.heading();
-    fill(127);
-    stroke(0);
     push();
     translate(this.position.x, this.position.y);
     rotate(angle);
-    beginShape();
-    vertex(this.r * 2, 0);
-    vertex(-this.r * 2, -this.r);
-    vertex(-this.r * 2, this.r);
-    endShape(CLOSE);
+
+    // glow 효과 (초록형광, 투명도)
+    noStroke();
+    for (let i = 8; i >= 2; i -= 2) {
+      fill(80, 255, 120, map(i, 8, 2, 30, 120));
+      ellipse(0, 0, this.r * i, this.r * i);
+    }
+
+    // 본체: 타원형(물고기 몸통)
+    fill(80, 255, 120, 220);
+    ellipse(0, 0, this.r * 4, this.r * 2); // 가로로 긴 타원
+
     pop();
   }
 
-  // Wraparound
   borders() {
     if (this.position.x < -this.r) this.position.x = width + this.r;
     if (this.position.y < -this.r) this.position.y = height + this.r;
@@ -83,33 +75,24 @@ class Boid {
     if (this.position.y > height + this.r) this.position.y = -this.r;
   }
 
-  // Separation
-  // Method checks for nearby boids and steers away
   separate(boids) {
     let desiredSeparation = 25;
     let steer = createVector(0, 0);
     let count = 0;
-    // For every boid in the system, check if it's too close
     for (let i = 0; i < boids.length; i++) {
       let d = p5.Vector.dist(this.position, boids[i].position);
-      // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
       if (d > 0 && d < desiredSeparation) {
-        // Calculate vector pointing away from neighbor
         let diff = p5.Vector.sub(this.position, boids[i].position);
         diff.normalize();
-        diff.div(d); // Weight by distance
+        diff.div(d);
         steer.add(diff);
-        count++; // Keep track of how many
+        count++;
       }
     }
-    // Average -- divide by how many
     if (count > 0) {
       steer.div(count);
     }
-
-    // As long as the vector is greater than 0
     if (steer.mag() > 0) {
-      // Implement Reynolds: Steering = Desired - Velocity
       steer.normalize();
       steer.mult(this.maxspeed);
       steer.sub(this.velocity);
@@ -118,8 +101,6 @@ class Boid {
     return steer;
   }
 
-  // Alignment
-  // For every nearby boid in the system, calculate the average velocity
   align(boids) {
     let neighborDistance = 50;
     let sum = createVector(0, 0);
@@ -143,64 +124,86 @@ class Boid {
     }
   }
 
-  // Cohesion
-  // For the average location (i.e. center) of all nearby boids, calculate steering vector towards that location
   cohere(boids) {
     let neighborDistance = 50;
-    let sum = createVector(0, 0); // Start with empty vector to accumulate all locations
+    let sum = createVector(0, 0);
     let count = 0;
     for (let i = 0; i < boids.length; i++) {
       let d = p5.Vector.dist(this.position, boids[i].position);
       if (d > 0 && d < neighborDistance) {
-        sum.add(boids[i].position); // Add location
+        sum.add(boids[i].position);
         count++;
       }
     }
     if (count > 0) {
       sum.div(count);
-      return this.seek(sum); // Steer towards the location
+      return this.seek(sum);
     } else {
       return createVector(0, 0);
     }
   }
 }
-
 class Flock {
-
   constructor() {
-    // An array for all the boids
-    this.boids = []; // Initialize the array
+    this.boids = [];
   }
 
   run() {
+    this.drawMetaballs();
     for (let boid of this.boids) {
-      boid.run(this.boids); // Passing the entire list of boids to each boid individually
+      boid.flock(this.boids);
+      boid.update();
+      boid.borders();
+      // boid.show(); // 메타볼 효과로 대체
     }
   }
 
   addBoid(b) {
     this.boids.push(b);
   }
+
+  // 메타볼(액체 점성) 효과
+  drawMetaballs() {
+    loadPixels();
+    for (let x = 0; x < width; x += 1) {
+      for (let y = 0; y < height; y += 1) {
+        let sum = 0;
+        for (let boid of this.boids) {
+          let dx = x - boid.position.x;
+          let dy = y - boid.position.y;
+          let distSq = dx * dx + dy * dy;
+          sum += boid.r * boid.r / (distSq + 1);
+        }
+        if (sum > 0.7) {
+          let idx = 4 * (y * width + x);
+          pixels[idx] = 80;     // R (초록형광)
+          pixels[idx + 1] = 255; // G
+          pixels[idx + 2] = 120; // B
+          pixels[idx + 3] = 180; // A (더 진하게)
+        }
+      }
+    }
+    updatePixels();
+  }
 }
 
 let flock;
 
 function setup() {
-  createCanvas(640, 240);
+  createCanvas(640, 640);
+  pixelDensity(1); // 픽셀 밀도 고정
   flock = new Flock();
-  // Add an initial set of boids into the system
-  for (let i = 0; i < 120; i++) {
+  for (let i = 0; i < 40; i++) {
     let boid = new Boid(width / 2, height / 2);
     flock.addBoid(boid);
   }
 }
 
 function draw() {
-  background(255);
+  background(0); // 검은색 배경
   flock.run();
 }
 
-// Add a new boid into the System
 function mouseDragged() {
   flock.addBoid(new Boid(mouseX, mouseY));
 }
