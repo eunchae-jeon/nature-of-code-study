@@ -1,0 +1,50 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: block;
+  border: 1px solid #999;
+}
+
+button#reset-btn,
+button#pause-btn,
+button#link-btn,
+button#resume-btn {
+  background: #444;
+  color: #e0e0e0;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  margin-right: 12px;
+}
+
+button#reset-btn:hover,
+button#pause-btn:hover,
+button#link-btn:hover,
+button#resume-btn:hover {
+  background: #555;
+  color: #fff;
+}
+
+button#reset-btn:active,
+button#pause-btn:active,
+button#link-btn:active,
+button#resume-btn:active {
+  background: #666;
+  color: #fff;
+}
+
+button#reset-btn:disabled,
+button#pause-btn:disabled,
+button#link-btn:disabled,
+button#resume-btn:disabled {
+  background: #333;
+  color: #777;
+  cursor: not-allowed;
+}
