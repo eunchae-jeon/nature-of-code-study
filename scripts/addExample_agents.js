@@ -16,6 +16,27 @@ function createP5ExampleEmbed({ exampleId, width = 600, height = 400, base = "ex
   return container;
 }
 
+function createP5ExampleEmbedBefore({ exampleId, width = 600, height = 400, base = "examples", target = null }) {
+  // 예제 id: "vectors/example1" 또는 "forces/example1" 등
+  const container = document.createElement('div');
+  container.style.marginBottom = "32px";
+
+  // iframe
+  const iframe = document.createElement('iframe');
+  iframe.width = width;
+  iframe.height = height;
+  iframe.id = "p5-iframe";
+  iframe.src = `${base}/${exampleId}`;
+  iframe.style.display = "block";
+
+  container.appendChild(iframe);
+
+  if (target) {
+    target.parentNode.insertBefore(container, target);
+  }
+
+  return container;
+}
 
 function createYoutubeEmbed({ videoId, width = 600, height = 338, target = null, start = 0 }) {
   const container = target ?? document.createElement('div');
@@ -47,7 +68,7 @@ function createImageEmbed({ imgUrl, alt = "", width = 600, target = null, margin
   img.src = imgUrl;
   img.alt = alt;
   img.style.maxWidth = "100%";
-  img.style.height = "200px";
+  img.style.height = "300px";
   img.style.display = "block";
   img.style.margin = "0 auto";
 
@@ -88,13 +109,23 @@ function createCodeBlock({ code, language = "javascript", target = null, comment
   return container;
 }
 
-createP5ExampleEmbed({
+
+const allParagraphs = document.querySelectorAll('p');
+let targetP = null;
+for (let p of allParagraphs) {
+  if (p.textContent.includes('레이놀즈는 훨씬 더 정교한 접근법을 설명합니다.')) {
+    targetP = p;
+    break;
+  }
+}
+createP5ExampleEmbedBefore({
   exampleId: "agents/example1",
   width: '100%',
   height: 500,
   base: "https://eunchae-jeon.github.io/nature-of-code-study/examples",
-  target: document.querySelectorAll('#example-52-arriving-at-a-target')[0]
+  target: targetP
 });
+
 
 createP5ExampleEmbed({
   exampleId: "agents/example2",
@@ -102,5 +133,19 @@ createP5ExampleEmbed({
   height: 500,
   base: "https://eunchae-jeon.github.io/nature-of-code-study/examples",
   target: document.querySelectorAll('#exercise-55')[0]
+});
+
+let targetP2 = null;
+for (let p of allParagraphs) {
+  if (p.textContent.includes('강아지가')) {
+    targetP2 = p;
+    break;
+  }
+}
+createImageEmbed({
+  imgUrl: "https://eunchae-jeon.github.io/nature-of-code-study/dog.gif",
+  alt: "Agent Example 2",
+  width: '100%',
+  target: targetP2
 });
 
