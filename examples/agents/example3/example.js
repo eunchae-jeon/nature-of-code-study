@@ -9,6 +9,8 @@
 // Click mouse to add boids into the system
 
 let flock;
+let fovDeg = 120; // 시야 각도(도)
+let fovSlider;
 
 function setup() {
   createCanvas(640, 240);
@@ -18,16 +20,21 @@ function setup() {
     let boid = new Boid(width / 2, height / 2);
     flock.addBoid(boid);
   }
+  // 시야 각도 슬라이더 추가
+  fovSlider = createSlider(30, 180, 120, 1);
+  fovSlider.position(10, 10);
+  fovSlider.style('width', '120px');
 }
 
 function draw() {
   background(255);
+  fovDeg = fovSlider.value(); // 슬라이더 값으로 시야 각도 업데이트
   flock.run();
 }
 
 // Add a new boid into the System
 function mouseDragged() {
-  flock.addBoid(new Boid(mouseX, mouseY));
+  // flock.addBoid(new Boid(mouseX, mouseY));
 }
 
 // The Nature of Code
@@ -126,7 +133,13 @@ class Boid {
   show() {
     // Draw a triangle rotated in the direction of velocity
     let angle = this.velocity.heading();
-    fill(127);
+    if (this === flock.boids[0]) {
+      fill(255, 0, 0, 50);
+    } else {
+      strokeWeight(1);
+      stroke(0);
+      fill(127);
+    }
     stroke(0);
     push();
     translate(this.position.x, this.position.y);
@@ -136,6 +149,15 @@ class Boid {
     vertex(-this.r * 2, -this.r);
     vertex(-this.r * 2, this.r);
     endShape(CLOSE);
+
+    // 1번째 보이드의 시야(파이모양) 시각화
+    if (this === flock.boids[0]) {
+      fill(255, 0, 0, 50);
+      stroke(255, 0, 0, 120);
+      strokeWeight(2);
+      let neighborDistance = 50;
+      arc(0, 0, neighborDistance * 2, neighborDistance * 2, -radians(fovDeg / 2), radians(fovDeg / 2));
+    }
     pop();
   }
 
@@ -188,11 +210,19 @@ class Boid {
     let neighborDistance = 50;
     let sum = createVector(0, 0);
     let count = 0;
+    let fov = radians(fovDeg); // 120도 시야
+
     for (let i = 0; i < boids.length; i++) {
+      if (boids[i] === this) continue;
       let d = p5.Vector.dist(this.position, boids[i].position);
       if (d > 0 && d < neighborDistance) {
-        sum.add(boids[i].velocity);
-        count++;
+        // 방향 체크 (파이모양)
+        let toOther = p5.Vector.sub(boids[i].position, this.position);
+        let angleToOther = abs(p5.Vector.angleBetween(this.velocity, toOther));
+        if (angleToOther < fov / 2) {
+          sum.add(boids[i].velocity);
+          count++;
+        }
       }
     }
     if (count > 0) {
@@ -211,18 +241,25 @@ class Boid {
   // For the average location (i.e. center) of all nearby boids, calculate steering vector towards that location
   cohere(boids) {
     let neighborDistance = 50;
-    let sum = createVector(0, 0); // Start with empty vector to accumulate all locations
+    let sum = createVector(0, 0);
     let count = 0;
+    let fov = radians(fovDeg);
+
     for (let i = 0; i < boids.length; i++) {
+      if (boids[i] === this) continue;
       let d = p5.Vector.dist(this.position, boids[i].position);
       if (d > 0 && d < neighborDistance) {
-        sum.add(boids[i].position); // Add location
-        count++;
+        let toOther = p5.Vector.sub(boids[i].position, this.position);
+        let angleToOther = abs(p5.Vector.angleBetween(this.velocity, toOther));
+        if (angleToOther < fov / 2) {
+          sum.add(boids[i].position);
+          count++;
+        }
       }
     }
     if (count > 0) {
       sum.div(count);
-      return this.seek(sum); // Steer towards the location
+      return this.seek(sum);
     } else {
       return createVector(0, 0);
     }
