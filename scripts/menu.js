@@ -5,6 +5,7 @@ const chapters = [
     { title: "3. Oscillation", link: "oscillation.html" },
     { title: "4. Particle System", link: "particle.html" },
     { title: "5. Autonomous Agents", link: "agents.html" },
+    { title: "6. Physics Library", link: "physics.html" },
     { title: "Workshop", link: "workshop.html" },
 ];
 

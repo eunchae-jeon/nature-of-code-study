@@ -1,4 +1,4 @@
-function createP5ExampleEmbed({ exampleId, width = 600, height = 400, base = "examples", target = null }) {
+function createP5ExampleEmbed({ exampleId, width = 600, height = 300, base = "examples", target = null }) {
   // 예제 id: "vectors/example1" 또는 "forces/example1" 등
   const container = target ?? document.createElement('div');
   container.style.marginBottom = "32px";
@@ -112,7 +112,7 @@ function createCodeBlock({ code, language = "javascript", target = null, comment
 createP5ExampleEmbed({
   exampleId: "agents/example3",
   width: '100%',
-  height: 500,
+  height: 350,
   base: "https://eunchae-jeon.github.io/nature-of-code-study/examples",
   target: document.querySelectorAll('#exercise-515')[0]
 });
@@ -120,7 +120,7 @@ createP5ExampleEmbed({
 createP5ExampleEmbed({
   exampleId: "agents/example4",
   width: '100%',
-  height: 500,
+  height: 350,
   base: "https://eunchae-jeon.github.io/nature-of-code-study/examples",
   target: document.querySelectorAll('#exercise-516')[0]
 });
@@ -128,7 +128,7 @@ createP5ExampleEmbed({
 createP5ExampleEmbed({
   exampleId: "agents/example5",
   width: '100%',
-  height: 500,
+  height: 350,
   base: "https://eunchae-jeon.github.io/nature-of-code-study/examples",
   target: document.querySelectorAll('#exercise-517')[0]
 });
@@ -136,7 +136,7 @@ createP5ExampleEmbed({
 createP5ExampleEmbed({
   exampleId: "agents/example6",
   width: '100%',
-  height: 500,
+  height: 350,
   base: "https://eunchae-jeon.github.io/nature-of-code-study/examples",
   target: document.querySelectorAll('#exercise-518')[0]
 });
@@ -144,7 +144,7 @@ createP5ExampleEmbed({
 createP5ExampleEmbed({
   exampleId: "agents/example7",
   width: '100%',
-  height: 500,
+  height: 350,
   base: "https://eunchae-jeon.github.io/nature-of-code-study/examples",
   target: document.querySelectorAll('#exercise-519')[0]
 });
